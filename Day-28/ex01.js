@@ -4,8 +4,7 @@ function updateCountdown() {
     
     const now = Date.now();
     
-    const distance = newYear2026 - now;
-    console.log(distance);
+    const distance = newYear2026 - now
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
