@@ -50,21 +50,24 @@ function renderOrder(cart) {
 
 
     let thead = `
-        <tr>
+        <thead>
+          <tr>
             <th style = "${itemStyle}">Tên sản phẩm</th>
             <th style = "${itemStyle}">Đơn giá</th>
             <th style = "${itemStyle}">Số lượng</th>
             <th style = "${itemStyle}">Thành tiền</th>
-        </tr>
+          </tr>
+        </thead>
     `
     table.innerHTML = thead
 
 
     let total = 0
+    let tbody = ""
     cart.forEach(item => {
         const rowStyle = item.hotSale ? "color: red" : ''
         total += item.price * item.quantity
-        let tbody = `
+        tbody += `
         <tr style = "${rowStyle}">
             <td style= "${itemStyle}">
             ${item.name}
@@ -80,20 +83,24 @@ function renderOrder(cart) {
             </td>
         </tr>
     `
-        table.innerHTML += tbody
     });
+    table.innerHTML += tbody
+
 
     let tfoot = `
-    <tr>
-        <td colspan="3" style= "${itemStyle}">Tổng tiền</td>
-        <td style= "${itemStyle}">${total} VND</td>
-    </tr>
+    <tfoot>
+        <tr>
+          <td colspan="3" style= "${itemStyle}">Tổng tiền</td>
+          <td style= "${itemStyle}">${total} VND</td>
+        </tr>
+    </tfoot>
     `
-    console.log(table);
+
+
     table.innerHTML += tfoot
-    
+    console.log(table.innerHTML);
     document.body.appendChild(table)
     
 }
 
- renderOrder(cart)
+renderOrder(cart)
