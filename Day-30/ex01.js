@@ -47,43 +47,55 @@ const menu = [
     }
   ];
 
-
-function createMenu(menu) {
-    const ulElement = document.createElement("ul")
-    if(!Array.isArray(menu) || menu.length === 0) {
-        alert("Du lieu ko hop le");
-        return
-    }
-
-
-    let content = ""
-    menu.forEach( item => {
-        if(item.parentId === 0) {
-            content += `
-            <li>
-                <a href ="#" ; style= "font-size: 24px">${item.name}</a>
-            </li>
-            `
-        } else {
-            content += `
-            <ul>
-                <Li>
-                    <a href ="#"; style= "font-size: 20px">${item.name}</a>
-                </Li>
-            </ul>`
-        }
-    })
-
-
-    ulElement.innerHTML += content
-    document.body.appendChild(ulElement)
+  
+function handleMenu(menu) {
+  if(!Array.isArray(menu) || menu.length === 0) {
+    console.log("Invalid ");
+    return
 }
-createMenu(menu)
 
+  const obj = {}
+  menu.forEach( item => {
+    obj[item.id] = {...item, children: []}
+  })
 
+  const newMenu = []
+  menu.forEach( item => {
+    if(item.parentId === 0) {
+      newMenu.push(obj[item.id])
+    } else {
+      obj[item.parentId].children.push(obj[item.id])
+    }})
+    function createList(items) {
+      const ul = document.createElement("ul")
+      items.forEach( item => {
+        const li = document.createElement("li")
+        const link = document.createElement("a")
+        link.textContent= item.name
+        link.href = "#"
+    
+        li.appendChild(link)
+    
+        if(item.parentId === 0) {
+          li.style.fontSize = "24px"
+        }else {
+          li.style.fontSize = "20px"
+        }
+    
+        ul.appendChild(li)
+    
+        if(item.children.length > 0) {
+          li.appendChild(createList(item.children))
+        }
+      })
+        return ul
+    }
+    const mainMenuElements = createList(newMenu)
+    mainMenuElements.id = "main-menu"
+    document.body.appendChild(mainMenuElements)
+}
 
-
-
+handleMenu(menu)
 
 
 
